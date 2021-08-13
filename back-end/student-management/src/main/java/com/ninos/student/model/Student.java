@@ -27,6 +27,6 @@ public class Student implements Serializable {
     private String gender;
 
     @Column(nullable = false)
-    private String customerCode;
+    private String StudentCode;
 
 }
