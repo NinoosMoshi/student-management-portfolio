@@ -25,8 +25,6 @@ public class Student implements Serializable {
     private String jobTitle;
     private String phone;
     private String gender;
-
-    @Column(nullable = false)
     private String StudentCode;
 
 }
