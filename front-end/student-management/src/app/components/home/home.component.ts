@@ -2,6 +2,7 @@ import { Student } from './../../model/student';
 import { StudentService } from './../../services/student.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +11,9 @@ import { NgForm } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
 
-  students!: Student[];
+  students: Student[];
   public viewStudent: any;
+  public editStudent: Student;
 
   constructor(private studentService: StudentService) { }
 
@@ -47,6 +49,18 @@ export class HomeComponent implements OnInit {
   }
 
 
+  onUpdateStudent(student:Student): void{
+    this.studentService.updateStudent(student).subscribe(
+      (response: Student) =>{
+        this.getAllStudents();
+      },
+      (error:HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
+  }
+
+
 
   public onOpenModal(student: Student, mode: string): void {
     const container = document.getElementById('main-container');
@@ -57,6 +71,10 @@ export class HomeComponent implements OnInit {
 
     if (mode === 'add') {
       button.setAttribute('data-target', '#addStudentModal');
+    }
+    if (mode === 'edit') {
+      this.editStudent = student;
+      button.setAttribute('data-target', '#updateStudentModal');
     }
 
     if (mode === 'view') {

@@ -43,7 +43,7 @@
           <td (click)="onOpenModal(temp, 'view')"><span>{{temp.gender}}</span></td>
           <td>
             <button (click)="onOpenModal(temp, 'view')" class="btn btn-sm btn-info"><i class="fa fa-eye"></i>View</button>
-            <button class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i>Edit</button>
+            <button (click)="onOpenModal(temp, 'edit')" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i>Edit</button>
             <button  class="btn btn-sm btn-danger"><i class="fa fa-times" style="color:rgb(253, 253, 253)"></i>Delete</button>
         </td>
       </tr>
@@ -148,6 +148,52 @@
  </div>
 
 
+<!-- Edit Modal -->
+<div class="modal fade" id="updateStudentModal" tabindex="-1" role="dialog" aria-labelledby="studentEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="studentEditModalLabel">Edit Employee {{editStudent?.name}}</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <form #editForm="ngForm">
+              <div class="form-group">
+                 <label for="name">Name</label>
+                 <input type="text" ngModel="{{editStudent?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+
+              </div>
+              <input type="hidden" ngModel="{{editStudent?.id}}" name="id" class="form-control" id="id" placeholder="ID">
+
+              <div class="form-group">
+                 <label for="email">Email Address</label>
+                 <input type="email" ngModel="{{editStudent?.email}}" name="email" class="form-control" id="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                 <label for="phone">Job title</label>
+                 <input type="text" ngModel="{{editStudent?.jobTitle}}" name="jobTitle" class="form-control" id="jobTitle" placeholder="Job title">
+              </div>
+              <div class="form-group">
+                 <label for="phone">Phone</label>
+                 <input type="text" ngModel="{{editStudent?.phone}}" name="phone" class="form-control" id="phone" name="phone" placeholder="Phone">
+              </div>
+              <div class="form-group">
+               <label for="phone">Gender</label>
+               <input type="text" ngModel="{{editStudent?.gender}}" name="phone" class="form-control" id="gender" name="gender" placeholder="Gender">
+            </div>
+
+              <div class="modal-footer">
+                 <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                 <button (click)="onUpdateStudent(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+</div>
 
 
 
