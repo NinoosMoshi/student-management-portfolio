@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarColor02">
      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-           <a (click)="onOpenModal(null!, 'add')"  class="nav-link" style="cursor: pointer;">Add Student <span class="sr-only">(current)</span></a>
+           <a (click)="onOpenModal(null, 'add')"  class="nav-link" style="cursor: pointer;">Add Student <span class="sr-only">(current)</span></a>
         </li>
      </ul>
      <form class="form-inline my-2 my-lg-0">
@@ -44,7 +44,7 @@
           <td>
             <button (click)="onOpenModal(temp, 'view')" class="btn btn-sm btn-info"><i class="fa fa-eye"></i>View</button>
             <button (click)="onOpenModal(temp, 'edit')" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i>Edit</button>
-            <button  class="btn btn-sm btn-danger"><i class="fa fa-times" style="color:rgb(253, 253, 253)"></i>Delete</button>
+            <button (click)="onOpenModal(temp, 'delete')" class="btn btn-sm btn-danger"><i class="fa fa-times" style="color:rgb(253, 253, 253)"></i>Delete</button>
         </td>
       </tr>
 
@@ -196,6 +196,26 @@
 </div>
 
 
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteStudentModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="deleteModelLabel">Delete Employee</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <p>Are you sure you want to delete employee <span style="color: red;">{{deleteStudent?.name}}</span> ?</p>
+           <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button (click)="onDeleteStudent(deleteStudent?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+           </div>
+        </div>
+     </div>
+  </div>
+</div>
 
 
 

@@ -41,10 +41,9 @@ export class StudentService {
 
 
   // http://localhost:8080/api/delete/{studentId}
-  public deleteStudent(studentId: number): void {
-      this.http.delete<void>(`${this.baseURL}/delete/${studentId}`)
+  public deleteStudent(studentId: number):Observable<void> {
+     return this.http.delete<void>(`${this.baseURL}/delete/${studentId}`)
   }
-
 
 
 

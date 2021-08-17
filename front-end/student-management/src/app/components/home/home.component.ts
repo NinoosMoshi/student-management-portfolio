@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   students: Student[];
   public viewStudent: any;
   public editStudent: Student;
+  public deleteStudent: Student;
 
   constructor(private studentService: StudentService) { }
 
@@ -62,6 +63,19 @@ export class HomeComponent implements OnInit {
 
 
 
+  onDeleteStudent(studentId:number): void{
+    this.studentService.deleteStudent(studentId).subscribe(
+      (response:void) =>{
+        this.getAllStudents();
+      },
+      (error:HttpErrorResponse) =>{
+        alert(error.message);
+      }
+    );
+  }
+
+
+
   public onOpenModal(student: Student, mode: string): void {
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
@@ -75,6 +89,10 @@ export class HomeComponent implements OnInit {
     if (mode === 'edit') {
       this.editStudent = student;
       button.setAttribute('data-target', '#updateStudentModal');
+    }
+    if (mode === 'delete') {
+      this.deleteStudent = student;
+      button.setAttribute('data-target', '#deleteStudentModal');
     }
 
     if (mode === 'view') {
