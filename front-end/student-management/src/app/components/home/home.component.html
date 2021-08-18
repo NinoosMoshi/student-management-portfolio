@@ -35,7 +35,10 @@
         </tr>
       </thead>
       <tbody >
-        <tr *ngFor="let temp of students">
+        <tr *ngFor="let temp of students | paginate: { id: 'student-list',
+        itemsPerPage: pageSize,
+        currentPage: page,
+        totalItems: students?.length } " style="cursor: pointer;">
           <td (click)="onOpenModal(temp, 'view')"><span >{{temp?.name}}</span></td>
           <td (click)="onOpenModal(temp, 'view')"><span>{{temp?.email}}</span></td>
           <td (click)="onOpenModal(temp, 'view')"><span>{{temp?.jobTitle}}</span></td>
@@ -52,7 +55,26 @@
     </table>
     </div>
 
-</div>
+
+
+      <!-- start pagination -->
+      <div class="row align-items-center" style="margin-top: 5px;">
+        <div class="col">
+            <pagination-controls class="text-center" id="student-list" (pageChange)="page = $event" >
+            </pagination-controls>
+       </div>
+       <div class="col">
+        Items per Page:
+         <select (change)="handlePageSizeChange($event)">
+            <option *ngFor="let size of pageSizes" [ngValue]="size">{{ size }}</option>
+         </select>
+       </div>
+   </div>
+      <!-- end pagination -->
+
+
+
+</div> <!--end container-->
 
 
 

@@ -16,11 +16,25 @@ export class HomeComponent implements OnInit {
   public editStudent: Student;
   public deleteStudent: Student;
 
+  // pagination
+  public pageSize = 3;
+  public page = 1;
+  pageSizes = [3, 6, 9];
+
+
+
   constructor(private studentService: StudentService) { }
 
   ngOnInit(): void {
     this.getAllStudents();
   }
+
+
+  handlePageSizeChange(event): void {
+    this.pageSize = event.target.value;
+    this.page = 1;
+  }
+
 
 
 
