@@ -30,6 +30,26 @@ export class HomeComponent implements OnInit {
   }
 
 
+
+  public searchStudent(key: string): void {
+    const results: Student[] = [];
+    for (const student of this.students) {
+      if (student.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
+          || student.email.toLowerCase().indexOf(key.toLowerCase()) !== -1
+          || student.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1
+          || student.jobTitle.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+          results.push(student);
+      }
+    }
+    this.students = results;
+    if (results.length === 0 || !key) {
+      this.getAllStudents();
+    }
+  }
+
+
+
+
   handlePageSizeChange(event): void {
     this.pageSize = event.target.value;
     this.page = 1;
