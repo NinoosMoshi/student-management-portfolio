@@ -36,6 +36,23 @@ export class HomeComponent implements OnInit {
   }
 
 
+  // start excel
+  public exportTableToExcel(): void {
+    const downloadLink = document.createElement('a');   // a is anchor tag
+    const dataType = 'application/vnd.ms-excel';
+    const table = document.getElementById('httptrace-table');   // httptrace-table is id of table
+    const tableHTML = table.outerHTML.replace(/ /g, '%20');
+    const filename = 'httptrace.xls';
+    document.body.appendChild(downloadLink);
+    downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    downloadLink.download = filename;
+    downloadLink.click();
+}
+// end excel
+
+
+
+
 
   //  start chart
 
@@ -81,6 +98,7 @@ export class HomeComponent implements OnInit {
         }
     }
 });
+
 }
 
 
@@ -145,10 +163,10 @@ private initializePieChart(): Chart {
          for(let temp in data){
         // console.log(temp)
         // console.log(data[temp].gender
-          this.students = data;
           this.processTraces(data[temp].gender);
           this.initializeBarChart();
           this.initializePieChart();
+          this.students = data;
          }
 
       }
