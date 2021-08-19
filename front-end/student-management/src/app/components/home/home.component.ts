@@ -3,6 +3,8 @@ import { StudentService } from './../../services/student.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ChartType } from 'src/app/enum/ChartType';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-home',
@@ -21,13 +23,92 @@ export class HomeComponent implements OnInit {
   public page = 1;
   pageSizes = [3, 6, 9];
 
-
+  // chart
+  public male: any[] = [];
+  public female: any[] = [];
+  public traceList: any[];
+  public httpDefaultTraces: any[] = [];
 
   constructor(private studentService: StudentService) { }
 
   ngOnInit(): void {
     this.getAllStudents();
   }
+
+
+
+  //  start chart
+
+  processTraces(trace: string){
+    switch(trace){
+      case 'male':
+        this.male.push(trace);
+        break;
+
+      case 'female':
+        this.female.push(trace);
+        break;
+
+      default:
+        this.httpDefaultTraces.push(trace);
+    }
+ }
+
+
+
+ private initializeBarChart(): Chart {
+  const barChartElement = document.getElementById('barChart') as HTMLCanvasElement;
+  return new Chart(barChartElement, {
+    type: ChartType.BAR,
+    data: {
+        labels: [`# Male:${this.male.length}, Percent:${(this.male.length / (this.male.length+this.female.length)) * 100}%`,
+                 `# Female:${this.female.length}, Percent:${(this.female.length / (this.male.length+this.female.length)) * 100}%`],
+        datasets: [{data: [this.male.length, this.female.length],
+            backgroundColor: [ 'rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+            borderWidth: 3
+        }]
+    },
+    options: {
+      title: { display: true, text: 'bar chart' },
+      legend: { display: false },
+      scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+}
+
+
+private initializePieChart(): Chart {
+  const pieChartElement = document.getElementById('pieChart') as HTMLCanvasElement;
+  return new Chart(pieChartElement, {
+    type: ChartType.PIE,
+    data: {
+      labels: [`# Male:${this.male.length}, Percent:${(this.male.length / (this.male.length+this.female.length)) * 100}%`,
+               `# Female:${this.female.length}, Percent:${(this.female.length / (this.male.length+this.female.length)) * 100}%`],
+      datasets: [{data: [this.male.length, this.female.length],
+          backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+          borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+          borderWidth: 3
+        }]
+    },
+    options: {
+      title: { display: true, text: "pie chart" },
+      legend: { display: true },
+      display: true
+    }
+});
+}
+
+
+
+
+  // end chart
 
 
 
@@ -61,8 +142,15 @@ export class HomeComponent implements OnInit {
   getAllStudents(){
     this.studentService.getStudents().subscribe(
       data =>{
-         this.students = data
-         console.log(data)
+         for(let temp in data){
+        // console.log(temp)
+        // console.log(data[temp].gender
+          this.students = data;
+          this.processTraces(data[temp].gender);
+          this.initializeBarChart();
+          this.initializePieChart();
+         }
+
       }
     )
   }
